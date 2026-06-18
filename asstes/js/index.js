@@ -126,3 +126,6 @@ if (searchModal) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSearch();
 });
+
+
+
