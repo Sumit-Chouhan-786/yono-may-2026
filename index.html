@@ -1,1106 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>All Yono App – India's Top Rummy Games Download Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Iconsax -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconsax-react@0.0.8/dist/index.css"/>
-  <!-- Anime.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  <style>
-    * { font-family: 'Inter', sans-serif; }
-
-    /* ── Ticker ── */
-    @keyframes ticker {
-      0%   { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    .ticker-track { animation: ticker 22s linear infinite; white-space: nowrap; }
-
-    /* ── Sidebar ── */
-    #sidebar { transform: translateX(-100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1); }
-    #sidebar.open { transform: translateX(0); }
-    #overlay { display: none; opacity: 0; transition: opacity .3s; }
-    #overlay.open { display: block; opacity: 1; }
-
-    /* ── Navbar glow line ── */
-    .nav-glow { box-shadow: 0 2px 24px 0 rgba(22,163,74,.45); }
-
-    /* ── Tab bar ── */
-    .tab-bar { background: #f1f5f9; border-radius: 12px; padding: 4px; }
-    .tab-btn {
-      border-radius: 9px; padding: 8px 0; font-size: 13px; font-weight: 600;
-      transition: all .25s cubic-bezier(.4,0,.2,1); color: #64748b;
-      position: relative; overflow: hidden;
-    }
-    .tab-btn.active { background: #16a34a; color: #fff; box-shadow: 0 2px 12px rgba(22,163,74,.4); }
-    .tab-btn:not(.active):hover { color: #16a34a; background: #dcfce7; }
-
-    /* ── Download button ── */
-    .btn-dl {
-      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-      box-shadow: 0 2px 8px rgba(22,163,74,.35);
-      transition: box-shadow .25s ease, transform .18s ease;
-      position: relative; overflow: hidden;
-      cursor: pointer;
-      isolation: isolate;
-    }
-
-    /* Shine sweep layer */
-    .btn-dl::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.32) 50%, transparent 100%);
-      transform: skewX(-18deg);
-      transition: none;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .btn-dl:hover::before {
-      animation: btn-shine .55s linear forwards;
-    }
-    @keyframes btn-shine {
-      0%   { left: -100%; }
-      100% { left: 160%; }
-    }
-
-    /* Gradient border glow on hover */
-    .btn-dl::after {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: inherit;
-      background: rgba(255,255,255,0);
-      transition: background .22s;
-      z-index: 2;
-    }
-    .btn-dl:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,163,74,.55), 0 0 0 2px rgba(22,163,74,.25); }
-    .btn-dl:hover::after { background: rgba(255,255,255,.06); }
-    .btn-dl:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(22,163,74,.35); }
-
-    /* Sliding arrow text inside btn-dl */
-    .btn-dl .dl-text {
-      display: inline-flex; align-items: center; gap: 4px;
-      transition: transform .22s cubic-bezier(.4,0,.2,1);
-      position: relative; z-index: 3;
-    }
-    .btn-dl:hover .dl-text { transform: translateX(2px); }
-
-    /* Ripple effect */
-    .ripple-circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.38);
-      transform: scale(0);
-      pointer-events: none;
-      animation: ripple-anim 0.58s linear forwards;
-      z-index: 4;
-    }
-    @keyframes ripple-anim {
-      to { transform: scale(4.5); opacity: 0; }
-    }
-
-    /* ── Linear gradient sweep on tab buttons ── */
-    .tab-btn::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(22,163,74,.12), transparent);
-      transition: none;
-    }
-    .tab-btn:not(.active):hover::before {
-      animation: tab-sweep .45s linear forwards;
-    }
-    @keyframes tab-sweep {
-      to { left: 100%; }
-    }
-
-    /* ── Footer pill links sweep ── */
-    .footer-pill {
-      position: relative; overflow: hidden;
-      transition: color .2s, border-color .2s;
-    }
-    .footer-pill::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
-    }
-    .footer-pill:hover::before { animation: btn-shine .5s linear forwards; }
-
-    /* ── Podium download button animated border ── */
-    .podium-dl-btn {
-      position: relative; overflow: hidden;
-      transition: transform .18s cubic-bezier(.4,0,.2,1), box-shadow .18s;
-    }
-    .podium-dl-btn::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,.07), transparent);
-      transform: skewX(-15deg);
-    }
-    .podium-dl-btn:hover::before { animation: btn-shine .45s linear forwards; }
-    .podium-dl-btn:hover { transform: scale(1.06) translateY(-1px); }
-
-    /* ── Telegram join button shine ── */
-    .tg-join-btn {
-      position: relative; overflow: hidden;
-      transition: transform .18s, box-shadow .18s;
-    }
-    .tg-join-btn::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 55%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(3,105,161,.12), transparent);
-      transform: skewX(-12deg);
-    }
-    .tg-join-btn:hover::before { animation: btn-shine .5s linear forwards; }
-    .tg-join-btn:hover {
-      transform: scale(1.06) translateY(-1px);
-      box-shadow: 0 4px 16px rgba(3,105,161,0.28);
-    }
-
-    /* ── App item hover: left bar fill animation ── */
-    .app-item {
-      position: relative;
-    }
-    .app-item .item-bar {
-      position: absolute; left: 0; top: 0;
-      width: 3px; height: 0%; background: #16a34a;
-      transition: height .28s cubic-bezier(.4,0,.2,1);
-      border-radius: 0 2px 2px 0;
-    }
-    .app-item:hover .item-bar { height: 100%; }
-
-    /* ── App icon avatar shine on row hover ── */
-    .app-avatar {
-      position: relative; overflow: hidden;
-    }
-    .app-avatar::after {
-      content: '';
-      position: absolute; top: -50%; left: -60%; width: 40%; height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
-      transform: skewX(-15deg);
-      opacity: 0;
-      transition: none;
-    }
-    .app-item:hover .app-avatar::after {
-      opacity: 1;
-      animation: avatar-shine .45s linear forwards;
-    }
-    @keyframes avatar-shine {
-      0%   { left: -60%; }
-      100% { left: 120%; }
-    }
-
-    /* ── Header nav button ring expand ── */
-    .nav-btn-ring {
-      position: relative;
-    }
-    .nav-btn-ring::after {
-      content: '';
-      position: absolute; inset: -3px;
-      border-radius: 10px;
-      border: 2px solid rgba(255,255,255,0);
-      transition: border-color .2s, inset .2s;
-    }
-    .nav-btn-ring:hover::after {
-      border-color: rgba(255,255,255,0.3);
-      inset: -2px;
-    }
-
-    /* ── Sidebar link animated underline ── */
-    .sidebar-link .link-label {
-      position: relative; display: inline-block;
-    }
-    .sidebar-link .link-label::after {
-      content: '';
-      position: absolute; bottom: -1px; left: 0;
-      width: 0%; height: 1.5px;
-      background: #16a34a;
-      transition: width .25s cubic-bezier(.4,0,.2,1);
-    }
-    .sidebar-link:hover .link-label::after { width: 100%; }
-
-    /* ── Social icons animated ring ── */
-    .social-icon {
-      position: relative;
-      transition: transform 0.22s cubic-bezier(.4,0,.2,1), background 0.22s;
-    }
-    .social-icon::after {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: 12px;
-      box-shadow: 0 0 0 0 rgba(255,255,255,.3);
-      transition: box-shadow .25s;
-    }
-    .social-icon:hover { transform: translateY(-4px) scale(1.1); }
-    .social-icon:hover::after { box-shadow: 0 4px 14px 2px rgba(255,255,255,.08); }
-
-    /* ── App list item ── */
-    .app-item {
-      transition: background .18s, transform .18s;
-      border-left: 3px solid transparent;
-    }
-    .app-item:hover {
-      background: #f0fdf4;
-      border-left-color: #16a34a;
-    }
-
-    /* ── Search modal ── */
-    #searchModal { transition: opacity .2s; }
-    #searchModal.hidden { opacity: 0; pointer-events: none; }
-    #searchModal:not(.hidden) { opacity: 1; }
-    .search-box {
-      transform: translateY(-12px); transition: transform .25s cubic-bezier(.4,0,.2,1);
-    }
-    #searchModal:not(.hidden) .search-box { transform: translateY(0); }
-
-    /* ── Search input ── */
-    #searchInput:focus { outline: none; }
-
-    /* ── Podium cards ── */
-    .podium-card {
-      transition: transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s;
-    }
-    .podium-card:hover { transform: translateY(-4px); }
-    .podium-no1:hover { box-shadow: 0 12px 32px rgba(239,68,68,.4); }
-    .podium-no2:hover { box-shadow: 0 8px 24px rgba(124,58,237,.35); }
-    .podium-no3:hover { box-shadow: 0 8px 24px rgba(234,88,12,.35); }
-
-    /* ── Avatar ring pulse on NO1 ── */
-    @keyframes ring-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(250,204,21,.6); }
-      50%       { box-shadow: 0 0 0 6px rgba(250,204,21,0); }
-    }
-    .ring-pulse { animation: ring-pulse 2.2s ease-in-out infinite; }
-
-    /* ── Sidebar item hover ── */
-    .sidebar-link {
-      transition: background .15s, color .15s, padding-left .15s;
-      border-radius: 10px; margin: 2px 8px;
-    }
-    .sidebar-link:hover { background: #dcfce7; color: #15803d; padding-left: 22px; }
-
-    /* ── Fade-in rows ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .app-item { animation: fadeUp .3s ease both; }
-    .app-item:nth-child(1)  { animation-delay: .04s; }
-    .app-item:nth-child(2)  { animation-delay: .08s; }
-    .app-item:nth-child(3)  { animation-delay: .12s; }
-    .app-item:nth-child(4)  { animation-delay: .16s; }
-    .app-item:nth-child(5)  { animation-delay: .20s; }
-    .app-item:nth-child(6)  { animation-delay: .24s; }
-    .app-item:nth-child(7)  { animation-delay: .28s; }
-    .app-item:nth-child(8)  { animation-delay: .32s; }
-    .app-item:nth-child(9)  { animation-delay: .36s; }
-    .app-item:nth-child(10) { animation-delay: .40s; }
-
-    /* ── Telegram shimmer ── */
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    .tg-shimmer {
-      background: linear-gradient(90deg,#0369a1 0%,#38bdf8 50%,#0369a1 100%);
-      background-size: 200% auto;
-      animation: shimmer 3s linear infinite;
-    }
-
-    /* ── Number badge ── */
-    .rank-badge {
-      width: 22px; height: 22px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; flex-shrink: 0;
-      background: #f1f5f9; color: #94a3b8;
-    }
-    .rank-badge.top3 { background: #fef9c3; color: #ca8a04; }
-
-    /* ══ ANIME.JS ANIMATION ADDITIONS ══ */
-
-    /* Hero section entrance */
-    .hero-section {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    /* Podium cards entrance */
-    .podium-card {
-      opacity: 0;
-    }
-
-    /* Telegram banner */
-    .tg-banner {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-
-    /* Header elements */
-    .header-title {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-
-    /* Animated download button pulse glow */
-    @keyframes btn-glow-pulse {
-      0%, 100% { box-shadow: 0 2px 8px rgba(22,163,74,.35); }
-      50%       { box-shadow: 0 2px 18px rgba(22,163,74,.7), 0 0 0 3px rgba(22,163,74,.15); }
-    }
-    .btn-dl-animated {
-      animation: btn-glow-pulse 2.5s ease-in-out infinite;
-    }
-
-    /* Iconsax icon bounce */
-    .icon-bounce {
-      display: inline-flex;
-      transition: transform 0.2s cubic-bezier(.4,0,.2,1);
-    }
-    .icon-bounce:hover {
-      transform: scale(1.18) rotate(-5deg);
-    }
-
-    /* NO1 badge shimmer */
-    @keyframes badge-shine {
-      0%   { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    .badge-no1 {
-      background: linear-gradient(90deg, #facc15 0%, #fef9c3 45%, #facc15 100%) !important;
-      background-size: 200% auto;
-      animation: badge-shine 2s linear infinite;
-      color: #78350f !important;
-    }
-
-    /* Sidebar slide icon animation */
-    .sidebar-link .sidebar-icon {
-      transition: transform 0.2s cubic-bezier(.4,0,.2,1);
-      display: inline-block;
-    }
-    .sidebar-link:hover .sidebar-icon {
-      transform: scale(1.25) rotate(5deg);
-    }
-
-    /* Search button spin */
-    .search-btn-icon {
-      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-    }
-    .search-btn:hover .search-btn-icon {
-      transform: rotate(15deg) scale(1.1);
-    }
-
-    /* Rank badge pop on hover */
-    .rank-badge {
-      transition: transform 0.18s cubic-bezier(.4,0,.2,1), background 0.18s;
-    }
-    .app-item:hover .rank-badge {
-      transform: scale(1.2);
-    }
-
-    /* Footer social icon */
-    .social-icon {
-      transition: transform 0.2s cubic-bezier(.4,0,.2,1), background 0.2s;
-    }
-    .social-icon:hover {
-      transform: translateY(-3px) scale(1.1);
-    }
-
-    /* Tg join button */
-    .tg-join-btn {
-      transition: transform 0.18s, box-shadow 0.18s;
-    }
-    .tg-join-btn:hover {
-      transform: scale(1.06) translateY(-1px);
-      box-shadow: 0 4px 16px rgba(3,105,161,0.25);
-    }
-
-    /* Floating particles in header */
-    .header-particle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      pointer-events: none;
-    }
-
-    /* Podium download btn */
-    .podium-dl-btn {
-      transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s;
-    }
-    .podium-dl-btn:hover {
-      transform: scale(1.06) translateY(-1px);
-    }
-
-    /* Section appear */
-    .section-appear {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-
-    /* Iconsax integration for menu/search using SVG inlined (iconsax CDN for web) */
-  </style>
+  <link rel="stylesheet" href="asstes/css/shared.css" />
 </head>
+
 <body class="bg-slate-100 font-sans">
+  <div class="max-w-[800px] mx-auto bg-white min-h-screen">
 
-<div class="max-w-[800px] mx-auto bg-white min-h-screen">
-
-  <!-- ══ HEADER ══ -->
-  <header class="bg-gradient-to-r from-green-700 via-green-600 to-emerald-500 text-white flex items-center justify-between px-4 py-3 sticky top-0 z-50 nav-glow" style="position:relative;overflow:hidden;">
-    <!-- Floating particles (anime.js targets) -->
-    <span class="header-particle" id="hp1" style="width:40px;height:40px;top:-10px;left:60px;"></span>
-    <span class="header-particle" id="hp2" style="width:24px;height:24px;top:4px;left:200px;"></span>
-    <span class="header-particle" id="hp3" style="width:16px;height:16px;bottom:-4px;right:120px;"></span>
-
-    <button id="menuBtn" class="text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors icon-bounce" aria-label="Menu">
-      <!-- Iconsax: HambergerMenu icon -->
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 7H21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-        <path d="M3 12H21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-        <path d="M3 17H21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-    </button>
-    <div class="header-title flex flex-col items-center">
-      <h1 class="text-base font-800 tracking-wider leading-tight" style="font-weight:800;letter-spacing:.06em;">ALL YONO APP</h1>
-      <span class="text-green-200 text-[10px] font-medium tracking-widest">INDIA'S TOP RUMMY PLATFORM</span>
-    </div>
-    <button onclick="openSearch()" class="search-btn text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors" aria-label="Search">
-      <!-- Iconsax: SearchNormal1 icon -->
-      <svg class="w-6 h-6 search-btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M22 22L20 20" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </header>
-
-  <!-- ══ SIDEBAR OVERLAY ══ -->
-  <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onclick="closeSidebar()"></div>
-
-  <!-- ══ SIDEBAR ══ -->
-  <nav id="sidebar" class="fixed top-0 left-0 h-full w-68 bg-white z-50 shadow-2xl flex flex-col" style="width:272px">
-    <div class="flex items-center justify-between px-5 py-4" style="background:linear-gradient(135deg,#15803d,#16a34a)">
-      <div>
-        <p class="font-bold text-white text-base tracking-wide">ALL YONO APP</p>
-        <p class="text-green-200 text-xs">India's Top Rummy Platform</p>
-      </div>
-      <button onclick="closeSidebar()" class="text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-lg transition-colors icon-bounce">
-        <!-- Iconsax: CloseCircle icon -->
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M9.17 14.83L14.83 9.17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14.83 14.83L9.17 9.17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <!-- HEADER -->
+    <header
+      class="bg-gradient-to-r from-green-700 via-green-600 to-emerald-500 text-white flex items-center justify-between px-4 py-3 sticky top-0 z-50 nav-glow"
+      style="position:relative;overflow:hidden;">
+      <span class="header-particle" id="hp1" style="width:40px;height:40px;top:-10px;left:60px;"></span>
+      <span class="header-particle" id="hp2" style="width:24px;height:24px;top:4px;left:200px;"></span>
+      <span class="header-particle" id="hp3" style="width:16px;height:16px;bottom:-4px;right:120px;"></span>
+      <button id="menuBtn"
+        class="nav-btn icon-bounce text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors"
+        aria-label="Menu">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+          <path d="M3 7H21" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M3 12H21" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+          <path d="M3 17H21" stroke="white" stroke-width="2.2" stroke-linecap="round" /></svg>
       </button>
-    </div>
-    <ul class="flex-1 overflow-y-auto py-3 px-1">
-      <li><a href="index.html" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm">
-        <!-- Iconsax: Home2 -->
-        <svg class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none"><path d="M9.02 2.84L3.63 7.04C2.73 7.74 2 9.23 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.3 21.19 7.74 20.2 7.05L14.02 2.72C12.62 1.74 10.37 1.79 9.02 2.84Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17.99V14.99" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Home</span>
-      </a></li>
-      <li><a href="#categories" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm" onclick="closeSidebar()">
-        <!-- Iconsax: Category -->
-        <svg class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none"><path d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Categories</span>
-      </a></li>
-      <li><a href="#contact" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm">
-        <!-- Iconsax: CallCalling -->
-        <svg class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none"><path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.25 19.44 21.25C19.07 21.25 18.67 21.16 18.24 20.97C17.8 20.78 17.33 20.52 16.83 20.19C16.3 19.84 15.8 19.46 15.32 19.05C14.84 18.64 14.39 18.2 13.97 17.73C13.56 17.26 13.18 16.77 12.83 16.26C12.5 15.76 12.24 15.25 12.05 14.75C11.86 14.24 11.77 13.75 11.77 13.28C11.77 12.92 11.85 12.57 12.01 12.25C12.17 11.92 12.4 11.62 12.72 11.35C13.1 10.97 13.51 10.79 13.95 10.79C14.11 10.79 14.27 10.82 14.42 10.88C14.57 10.94 14.73 11.04 14.86 11.19L16.26 13.09C16.39 13.23 16.49 13.37 16.56 13.5C16.63 13.62 16.67 13.74 16.67 13.85C16.67 13.98 16.63 14.12 16.55 14.25C16.47 14.39 16.36 14.53 16.22 14.67L15.76 15.15C15.69 15.22 15.66 15.3 15.66 15.39C15.66 15.44 15.67 15.49 15.69 15.54C15.72 15.59 15.74 15.63 15.76 15.67C15.89 15.91 16.11 16.22 16.42 16.6C16.73 16.98 17.06 17.37 17.42 17.75C17.79 18.13 18.15 18.47 18.52 18.78C18.9 19.09 19.21 19.3 19.45 19.43C19.49 19.45 19.53 19.47 19.58 19.5C19.63 19.53 19.68 19.54 19.74 19.54C19.83 19.54 19.91 19.5 19.99 19.43L20.45 18.97C20.59 18.83 20.73 18.72 20.86 18.64C20.99 18.56 21.12 18.52 21.26 18.52C21.37 18.52 21.49 18.55 21.62 18.62C21.75 18.69 21.89 18.79 22.04 18.92L22.04 18.92C21.97 18.33 21.97 18.33 21.97 18.33Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 5.5C21 6.36 20.84 7.17 20.52 7.92C20.2 8.67 19.76 9.36 19.2 9.97" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.03 2.5C11.03 2.5 11.03 2.5 11.03 2.5C16.02 2.5 20.07 6.55 20.07 11.54" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Contact us</span>
-      </a></li>
-      <li><a href="about.html" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm">
-        <!-- Iconsax: Profile2User -->
-        <svg class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none"><path d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.12 11.49 9.13 11.49 9.15 11.49C9.16 11.49 9.16 11.49 9.17 11.49C11.73 11.4 13.74 9.32 13.75 6.75C13.75 4.13 11.62 2 9 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.49 4C18.56 4 20.24 5.69 20.24 7.75C20.24 9.77 18.62 11.43 16.62 11.5C16.54 11.49 16.45 11.49 16.37 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.16 14.56C1.56 16.28 1.56 19.06 4.16 20.77C7.11 22.71 11.9 22.71 14.85 20.77C17.45 19.05 17.45 16.27 14.85 14.56C11.91 12.63 7.12 12.63 4.16 14.56Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.34 20C19.11 19.83 19.84 19.51 20.43 19.02C22.03 17.77 22.03 15.73 20.43 14.48C19.85 14 19.13 13.69 18.37 13.51" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>About us</span>
-      </a></li>
-      <li class="my-1 mx-4 border-t border-gray-100"></li>
-      <li><a href="#privacy" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm">
-        <!-- Iconsax: ShieldTick -->
-        <svg class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M10.49 2.23L5.5 4.11C4.35 4.54 3.41 5.9 3.41 7.12V14.55C3.41 15.73 4.19 17.28 5.14 17.99L9.44 21.2C10.85 22.26 13.17 22.26 14.58 21.2L18.88 17.99C19.83 17.28 20.61 15.73 20.61 14.55V7.12C20.61 5.89 19.67 4.53 18.52 4.1L13.53 2.23C12.68 1.92 11.32 1.92 10.49 2.23Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.05 11.87L10.66 13.48L14.96 9.18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Privacy Policy</span>
-      </a></li>
-      <li><a href="#terms" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm">
-        <!-- Iconsax: DocumentText -->
-        <svg class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 4.5V6.5C14.5 7.6 15.4 8.5 16.5 8.5H18.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 13H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Terms &amp; Conditions</span>
-      </a></li>
-      <li><a href="#disclaimer" class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm">
-        <!-- Iconsax: InfoCircle -->
-        <svg class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.9945 16H12.0035" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Disclaimer</span>
-      </a></li>
-    </ul>
-    <div class="px-5 py-4 border-t border-gray-100 bg-gray-50">
-      <p class="text-xs text-gray-400 text-center">© All Yono App · All Rights Reserved</p>
-    </div>
-  </nav>
+      <div class="header-title flex flex-col items-center">
+        <h1 class="text-base font-extrabold tracking-wider leading-tight" style="font-weight:800;letter-spacing:.06em;">
+          ALL YONO APP</h1>
+        <span class="text-green-200 text-[10px] font-medium tracking-widest">INDIA'S TOP RUMMY PLATFORM</span>
+      </div>
+      <button onclick="openSearch()"
+        class="search-btn nav-btn text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors"
+        aria-label="Search">
+        <svg class="w-6 h-6 search-btn-icon" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M11.5 21C16.75 21 21 16.75 21 11.5C21 6.25 16.75 2 11.5 2C6.25 2 2 6.25 2 11.5C2 16.75 6.25 21 11.5 21Z"
+            stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 22L20 20" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+      </button>
+    </header>
 
-  <!-- ══ HERO BANNER ══ -->
-  <section class="hero-section mx-3 mt-4 rounded-2xl overflow-hidden shadow-lg" style="background:linear-gradient(135deg,#0d0d0d 60%,#1a3a1a)">
-    <div class="w-full">
+    <!-- SIDEBAR OVERLAY -->
+    <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <nav id="sidebar" class="fixed top-0 left-0 h-full bg-white z-50 shadow-2xl flex flex-col" style="width:272px">
+      <div class="flex items-center justify-between px-5 py-4"
+        style="background:linear-gradient(135deg,#15803d,#16a34a)">
+        <div>
+          <p class="font-bold text-white text-base tracking-wide">ALL YONO APP</p>
+          <p class="text-green-200 text-xs">India's Top Rummy Platform</p>
+        </div>
+        <button onclick="closeSidebar()"
+          class="icon-bounce text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-lg transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+              stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.17 14.83L14.83 9.17" stroke="white" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M14.83 14.83L9.17 9.17" stroke="white" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" /></svg>
+        </button>
+      </div>
+      <ul class="flex-1 overflow-y-auto py-3 px-1">
+        <li><a href="index.html"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9.02 2.84L3.63 7.04C2.73 7.74 2 9.23 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.3 21.19 7.74 20.2 7.05L14.02 2.72C12.62 1.74 10.37 1.79 9.02 2.84Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 17.99V14.99" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" /></svg><span class="link-label">Home</span></a></li>
+        <li><a href="#categories"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"
+            onclick="closeSidebar()"><svg class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+              <path d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg><span
+              class="link-label">Categories</span></a></li>
+        <li><a href="#contact"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.25 19.44 21.25C19.07 21.25 18.67 21.16 18.24 20.97C17.8 20.78 17.33 20.52 16.83 20.19C16.3 19.84 15.8 19.46 15.32 19.05C14.84 18.64 14.39 18.2 13.97 17.73C13.56 17.26 13.18 16.77 12.83 16.26C12.5 15.76 12.24 15.25 12.05 14.75C11.86 14.24 11.77 13.75 11.77 13.28C11.77 12.92 11.85 12.57 12.01 12.25C12.17 11.92 12.4 11.62 12.72 11.35C13.1 10.97 13.51 10.79 13.95 10.79C14.11 10.79 14.27 10.82 14.42 10.88C14.57 10.94 14.73 11.04 14.86 11.19L16.26 13.09C16.39 13.23 16.49 13.37 16.56 13.5C16.63 13.62 16.67 13.74 16.67 13.85C16.67 13.98 16.63 14.12 16.55 14.25C16.47 14.39 16.36 14.53 16.22 14.67L15.76 15.15C15.69 15.22 15.66 15.3 15.66 15.39C15.66 15.44 15.67 15.49 15.69 15.54C15.72 15.59 15.74 15.63 15.76 15.67C15.89 15.91 16.11 16.22 16.42 16.6C16.73 16.98 17.06 17.37 17.42 17.75C17.79 18.13 18.15 18.47 18.52 18.78C18.9 19.09 19.21 19.3 19.45 19.43C19.49 19.45 19.53 19.47 19.58 19.5C19.63 19.53 19.68 19.54 19.74 19.54C19.83 19.54 19.91 19.5 19.99 19.43L20.45 18.97C20.59 18.83 20.73 18.72 20.86 18.64C20.99 18.56 21.12 18.52 21.26 18.52C21.37 18.52 21.49 18.55 21.62 18.62C21.75 18.69 21.89 18.79 22.04 18.92Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg><span
+              class="link-label">Contact us</span></a></li>
+        <li><a href="about.html"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.17 11.49 11.73 11.4 13.75 6.75C13.75 4.13 11.62 2 9 2Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M4.16 14.56C1.56 16.28 1.56 19.06 4.16 20.77C7.11 22.71 11.9 22.71 14.85 20.77C17.45 19.05 17.45 16.27 14.85 14.56C11.91 12.63 7.12 12.63 4.16 14.56Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg><span
+              class="link-label">About us</span></a></li>
+        <li class="my-1 mx-4 border-t border-gray-100"></li>
+        <li><a href="#privacy"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M10.49 2.23L5.5 4.11C4.35 4.54 3.41 5.9 3.41 7.12V14.55C3.41 15.73 4.19 17.28 5.14 17.99L9.44 21.2C10.85 22.26 13.17 22.26 14.58 21.2L18.88 17.99C19.83 17.28 20.61 15.73 20.61 14.55V7.12C20.61 5.89 19.67 4.53 18.52 4.1L13.53 2.23C12.68 1.92 11.32 1.92 10.49 2.23Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9.05 11.87L10.66 13.48L14.96 9.18" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" /></svg><span class="link-label">Privacy
+              Policy</span></a></li>
+        <li><a href="#terms"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+              <path d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.5 4.5V6.5C14.5 7.6 15.4 8.5 16.5 8.5H18.5" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 13H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M8 17H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" /></svg><span class="link-label">Terms &amp; Conditions</span></a></li>
+        <li><a href="#disclaimer"
+            class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+              class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 8V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11.9945 16H12.0035" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                stroke-linejoin="round" /></svg><span class="link-label">Disclaimer</span></a></li>
+      </ul>
+      <div class="px-5 py-4 border-t border-gray-100 bg-gray-50">
+        <p class="text-xs text-gray-400 text-center">© All Yono App · All Rights Reserved</p>
+      </div>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <section class="hero-section mx-3 mt-4 rounded-2xl overflow-hidden shadow-lg"
+      style="background:linear-gradient(135deg,#0d0d0d 60%,#1a3a1a)">
       <img height="200" width="800" src="asstes/images/hero.webp" alt="hero"
-        class="w-full min-h-[100px] sm:min-h-[150px] lg:min-h-[200px] h-auto block"/>
-    </div>
-  </section>
+        class="w-full min-h-[100px] sm:min-h-[150px] lg:min-h-[200px] h-auto block" />
+    </section>
 
-  <!-- ══ TOP 3 PODIUM ══ -->
-  <section class="mt-5 px-3">
-    <div class="flex items-end justify-center gap-2.5">
-
-      <!-- NO2 -->
-      <div class="podium-card podium-no2 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-lg" style="background:linear-gradient(160deg,#ede9fe 0%,#a78bfa 55%,#6d28d9 100%);min-height:196px;">
-        <div class="mt-4 w-[72px] h-[72px] rounded-full bg-white/25 flex items-center justify-center ring-2 ring-white/40">
-          <img src="asstes/images/jaiho-rummy.png" alt="Jaiho Rummy" class="w-14 h-14 object-contain rounded-full"
-            onerror="this.outerHTML='<div style=\'width:56px;height:56px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>JR</div>'"/>
+    <!-- TOP 3 PODIUM -->
+    <section class="mt-5 px-3">
+      <div class="flex items-end justify-center gap-2.5">
+        <!-- NO2 -->
+        <div class="podium-card podium-no2 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-lg"
+          style="background:linear-gradient(160deg,#ede9fe 0%,#a78bfa 55%,#6d28d9 100%);min-height:196px;">
+          <div
+            class="mt-4 w-[72px] h-[72px] rounded-full bg-white/25 flex items-center justify-center ring-2 ring-white/40">
+            <img src="asstes/images/jaiho-rummy.png" alt="Jaiho Rummy" class="w-14 h-14 object-contain rounded-full"
+              onerror="this.outerHTML='<div style=\'width:56px;height:56px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>JR</div>'" />
+          </div>
+          <div
+            class="mt-2 bg-white/30 backdrop-blur-sm rounded-full px-3 py-0.5 text-white text-[11px] font-bold tracking-wider">
+            NO 2</div>
+          <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Jaiho Rummy</p>
+          <a href="netavip.html"
+            class="podium-dl-btn mt-2.5 bg-white text-purple-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:bg-purple-50 transition-colors">⬇
+            Download</a>
         </div>
-        <div class="mt-2 bg-white/30 backdrop-blur-sm rounded-full px-3 py-0.5 text-white text-[11px] font-bold tracking-wider">NO 2</div>
-        <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Jaiho Rummy</p>
-        <a href="netavip.html" class="podium-dl-btn mt-2.5 bg-white text-purple-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:bg-purple-50 transition-all">⬇ Download</a>
-      </div>
-
-      <!-- NO1 -->
-      <div class="podium-card podium-no1 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-xl" style="background:linear-gradient(160deg,#fee2e2 0%,#f87171 40%,#b91c1c 100%);min-height:236px;">
-        <div class="mt-5 w-[88px] h-[88px] rounded-full bg-white/25 ring-pulse ring-2 ring-yellow-300/70 flex items-center justify-center">
-          <img src="asstes/images/slots-winner.png" alt="Slots Winner" class="w-[72px] h-[72px] object-contain rounded-full"
-            onerror="this.outerHTML='<div style=\'width:72px;height:72px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>SW</div>'"/>
+        <!-- NO1 -->
+        <div class="podium-card podium-no1 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-xl"
+          style="background:linear-gradient(160deg,#fee2e2 0%,#f87171 40%,#b91c1c 100%);min-height:236px;">
+          <div
+            class="mt-5 w-[88px] h-[88px] rounded-full bg-white/25 ring-pulse ring-2 ring-yellow-300/70 flex items-center justify-center">
+            <img src="asstes/images/slots-winner.png" alt="Slots Winner"
+              class="w-[72px] h-[72px] object-contain rounded-full"
+              onerror="this.outerHTML='<div style=\'width:72px;height:72px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>SW</div>'" />
+          </div>
+          <div class="badge-no1 mt-2 rounded-full px-4 py-0.5 text-[11px] font-bold tracking-wider shadow">✦ NO 1</div>
+          <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Slots Winner</p>
+          <p class="text-yellow-200 text-[11px] font-semibold">100% Trusted</p>
+          <a href="netavip.html"
+            class="podium-dl-btn mt-2.5 bg-white text-red-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:bg-red-50 transition-colors">⬇
+            Download</a>
         </div>
-        <div class="badge-no1 mt-2 rounded-full px-4 py-0.5 text-[11px] font-bold tracking-wider shadow">✦ NO 1</div>
-        <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Slots Winner</p>
-        <p class="text-yellow-200 text-[11px] font-semibold">100% Trusted</p>
-        <a href="netavip.html" class="podium-dl-btn mt-2.5 bg-white text-red-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:bg-red-50 transition-all">⬇ Download</a>
-      </div>
-
-      <!-- NO3 -->
-      <div class="podium-card podium-no3 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-lg" style="background:linear-gradient(160deg,#ffedd5 0%,#fb923c 55%,#c2410c 100%);min-height:196px;">
-        <div class="mt-4 w-[72px] h-[72px] rounded-full bg-white/25 flex items-center justify-center ring-2 ring-white/40">
-          <img src="asstes/images/spin-gold.png" alt="Spin Gold" class="w-14 h-14 object-contain rounded-full"
-            onerror="this.outerHTML='<div style=\'width:56px;height:56px;border-radius:50%;background:#ea580c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>SG</div>'"/>
-        </div>
-        <div class="mt-2 bg-white/30 backdrop-blur-sm rounded-full px-3 py-0.5 text-white text-[11px] font-bold tracking-wider">NO 3</div>
-        <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Spin Gold</p>
-        <a href="netavip.html" class="podium-dl-btn mt-2.5 bg-white text-orange-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:shadow-lg hover:bg-orange-50 transition-all">⬇ Download</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══ TELEGRAM BANNER ══ -->
-  <div class="tg-banner mx-3 mt-4 flex items-center justify-between tg-shimmer rounded-2xl px-4 py-3 shadow-lg">
-    <div>
-      <p class="text-white font-bold text-sm">📣 Join Our Telegram</p>
-      <p class="text-sky-100 text-[11px]">Get latest app updates &amp; bonuses</p>
-    </div>
-    <a href="#" class="tg-join-btn bg-white text-sky-700 font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 shadow hover:shadow-md hover:bg-sky-50">
-      <!-- Iconsax: Send2 (Telegram-like) -->
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M9.04 16.05L9.04 19.81C9.04 20.36 9.68 20.63 10.04 20.23L12.18 17.85L9.04 16.05Z" fill="#0369a1"/><path d="M21.88 2.34C21.56 2.11 21.14 2.08 20.79 2.26L2.19 11.7C1.83 11.89 1.6 12.27 1.6 12.68C1.6 13.09 1.83 13.47 2.19 13.66L6.46 15.96L17.63 6.46L9.04 16.05L18.59 21.35C18.78 21.46 18.99 21.52 19.2 21.52C19.38 21.52 19.57 21.47 19.73 21.38C20.05 21.19 20.27 20.86 20.3 20.49L22.39 3.47C22.43 3.08 22.2 2.57 21.88 2.34Z" fill="#0369a1"/></svg>
-      Join Now
-    </a>
-  </div>
-
-  <!-- ══ APP LIST ══ -->
-  <section id="categories" class="section-appear mt-5 mx-3 mb-2">
-    <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
-
-      <!-- Tab bar -->
-      <div class="p-3 border-b border-gray-100">
-        <div class="tab-bar flex">
-          <button onclick="switchTab('all')" id="tab-all" class="tab-btn active flex-1 text-center">All Apps</button>
-          <button onclick="switchTab('new')" id="tab-new" class="tab-btn flex-1 text-center">New Apps</button>
+        <!-- NO3 -->
+        <div class="podium-card podium-no3 flex-1 rounded-2xl overflow-hidden flex flex-col items-center pb-4 shadow-lg"
+          style="background:linear-gradient(160deg,#ffedd5 0%,#fb923c 55%,#c2410c 100%);min-height:196px;">
+          <div
+            class="mt-4 w-[72px] h-[72px] rounded-full bg-white/25 flex items-center justify-center ring-2 ring-white/40">
+            <img src="asstes/images/spin-gold.png" alt="Spin Gold" class="w-14 h-14 object-contain rounded-full"
+              onerror="this.outerHTML='<div style=\'width:56px;height:56px;border-radius:50%;background:#ea580c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px\'>SG</div>'" />
+          </div>
+          <div
+            class="mt-2 bg-white/30 backdrop-blur-sm rounded-full px-3 py-0.5 text-white text-[11px] font-bold tracking-wider">
+            NO 3</div>
+          <p class="text-white font-bold text-sm mt-1.5 drop-shadow">Spin Gold</p>
+          <a href="netavip.html"
+            class="podium-dl-btn mt-2.5 bg-white text-orange-700 font-bold text-[11px] px-5 py-1.5 rounded-full shadow-md hover:bg-orange-50 transition-colors">⬇
+            Download</a>
         </div>
       </div>
+    </section>
 
-      <!-- All Apps -->
-      <div id="list-all">
-        <ul class="divide-y divide-gray-50">
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">1</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#15803d">JR</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹50</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl btn-dl-animated text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">2</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#ca8a04">B101</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Bingo 101</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹20</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">3</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#166534">J777</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho 777 Vip</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹155</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">4</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#16a34a">OK</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Ok Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹25</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">5</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#2563eb">JOY</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Joy Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹51</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">6</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#15803d">J91</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho 91</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹100</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">7</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#b45309">SG</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Spin Gold</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹37</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">8</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#7c3aed">YS</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Yes Spin</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹40</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">9</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#dc2626">SW</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Slots Winner</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹100</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge">10</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#ea580c">INR</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">INR Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹50</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-        </ul>
+    <!-- TELEGRAM BANNER -->
+    <div class="tg-banner mx-3 mt-4 flex items-center justify-between tg-shimmer rounded-2xl px-4 py-3 shadow-lg">
+      <div>
+        <p class="text-white font-bold text-sm">📣 Join Our Telegram</p>
+        <p class="text-sky-100 text-[11px]">Get latest app updates &amp; bonuses</p>
       </div>
-
-      <!-- New Apps -->
-      <div id="list-new" class="hidden">
-        <ul class="divide-y divide-gray-50">
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">1</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#0d9488">GG</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Gogo Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹55</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">2</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#4338ca">E777</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Ever 777</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹60</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-          <li class="app-item flex items-center px-4 py-3 gap-3"><div class="item-bar"></div>
-            <div class="rank-badge top3">3</div>
-            <div class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm" style="background:#be185d">LR</div>
-            <div class="flex-1 min-w-0">
-              <p class="font-semibold text-gray-800 text-sm leading-tight">Love Rummy</p>
-              <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹75</p>
-              <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
-            </div>
-            <a href="jaiho-777.html" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span class="dl-text">⬇ Download</span></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FOOTER ══ -->
-  <footer class="mt-8 bg-gray-950 text-white">
-    <div class="overflow-hidden bg-gray-900 py-2">
-      <div class="ticker-track text-xs text-gray-400 font-medium">
-        &nbsp;&nbsp;&nbsp;All Yono Game &nbsp;•&nbsp; Yono All Game &nbsp;•&nbsp; Yono All Games &nbsp;•&nbsp; Yono Game App &nbsp;•&nbsp; All Yono App &nbsp;•&nbsp; Yono Games Download &nbsp;•&nbsp; Rummy App Download &nbsp;•&nbsp; Win Real Cash &nbsp;•&nbsp; Best Rummy App &nbsp;•&nbsp;
-      </div>
-    </div>
-    <div class="text-center py-6 border-b border-gray-800">
-      <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-3 font-semibold">Connect With Us</p>
-      <div class="flex justify-center gap-3">
-        <a href="#" class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-red-600 flex items-center justify-center" aria-label="YouTube">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
-        </a>
-        <a href="#" class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-pink-600 flex items-center justify-center" aria-label="Instagram">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.2-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9C2.4 3.9 4 2.3 7.1 2.3c1.3-.1 1.7-.1 4.9-.1zm0-2.2C8.7 0 8.3 0 7 .1 2.7.3.3 2.7.1 7 0 8.3 0 8.7 0 12s0 3.7.1 5c.2 4.3 2.6 6.7 7 6.9 1.3.1 1.7.1 5 .1s3.7 0 5-.1c4.3-.2 6.7-2.6 6.9-7 .1-1.3.1-1.7.1-5s0-3.7-.1-5c-.2-4.3-2.6-6.7-7-6.9C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
-        </a>
-        <a href="#" class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-blue-600 flex items-center justify-center" aria-label="Facebook">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg>
-        </a>
-        <a href="#" class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-slate-600 flex items-center justify-center" aria-label="X/Twitter">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.24 3h3.56l-7.77 8.9L23 21h-7.15l-5.6-7.35L4.1 21H.53l8.32-9.51L1 3h7.33l5.06 6.72L18.24 3zM17 19h1.97L7.08 5H4.97L17 19z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="px-4 py-4">
-      <div class="flex flex-wrap justify-center gap-2 mb-2">
-        <a href="about.html" class="border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs px-4 py-1.5 rounded-full transition-colors">👤 About Us</a>
-        <a href="#contact"   class="border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs px-4 py-1.5 rounded-full transition-colors">📞 Contact Us</a>
-        <a href="#privacy"   class="border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs px-4 py-1.5 rounded-full transition-colors">🔒 Privacy Policy</a>
-      </div>
-      <div class="flex flex-wrap justify-center gap-2">
-        <a href="#terms"      class="border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs px-4 py-1.5 rounded-full transition-colors">📄 Terms &amp; Conditions</a>
-        <a href="#disclaimer" class="border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 text-xs px-4 py-1.5 rounded-full transition-colors">⚠️ Disclaimer</a>
-      </div>
-    </div>
-    <div class="text-center py-4 border-t border-gray-800 text-xs text-gray-500">
-      Copyright © <strong class="text-gray-300">All Yono App</strong> · All Rights Reserved
-    </div>
-  </footer>
-</div>
-
-<!-- ══ SEARCH MODAL ══ -->
-<div id="searchModal" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-[60] hidden items-start justify-center pt-14 px-4">
-  <div class="search-box bg-white rounded-2xl shadow-2xl w-full max-w-[720px] overflow-hidden border border-gray-100">
-    <div class="flex items-center gap-3 px-4 py-3.5 border-b border-gray-100">
-      <!-- Iconsax: SearchNormal -->
-      <svg class="w-5 h-5 text-green-500 flex-shrink-0" viewBox="0 0 24 24" fill="none">
-        <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M22 22L20 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <input id="searchInput" type="text" placeholder="Search rummy apps…"
-        class="flex-1 text-sm outline-none text-gray-800 placeholder-gray-400 bg-transparent font-medium"/>
-      <button onclick="closeSearch()" class="text-gray-300 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-lg transition-colors icon-bounce">
-        <!-- Iconsax: CloseSquare -->
+      <a href="#"
+        class="tg-join-btn bg-white text-sky-700 font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 shadow hover:bg-sky-50">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-          <path d="M9.17 14.83L14.83 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14.83 14.83L9.17 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+          <path d="M9.04 16.05L9.04 19.81C9.04 20.36 9.68 20.63 10.04 20.23L12.18 17.85L9.04 16.05Z" fill="#0369a1" />
+          <path
+            d="M21.88 2.34C21.56 2.11 21.14 2.08 20.79 2.26L2.19 11.7C1.83 11.89 1.6 12.27 1.6 12.68C1.6 13.09 1.83 13.47 2.19 13.66L6.46 15.96L17.63 6.46L9.04 16.05L18.59 21.35C18.78 21.46 18.99 21.52 19.2 21.52C19.38 21.52 19.57 21.47 19.73 21.38C20.05 21.19 20.27 20.86 20.3 20.49L22.39 3.47C22.43 3.08 22.2 2.57 21.88 2.34Z"
+            fill="#0369a1" /></svg>
+        Join Now
+      </a>
     </div>
-    <ul id="searchResults" class="divide-y divide-gray-50 max-h-[340px] overflow-y-auto"></ul>
-    <p id="searchEmpty" class="hidden text-center text-gray-400 text-sm py-8">😕 No apps found.</p>
-  </div>
-</div>
 
-<script src="asstes/js/index.js"></script>
-
-<script>
-// ═══════════════════════════════════════════
-//  SIDEBAR TOGGLE
-// ═══════════════════════════════════════════
-document.getElementById('menuBtn').addEventListener('click', openSidebar);
-
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('overlay').classList.add('open');
-  // Anime.js: sidebar items stagger in
-  anime({
-    targets: '#sidebar .sidebar-link',
-    translateX: [-20, 0],
-    opacity: [0, 1],
-    delay: anime.stagger(55, { start: 120 }),
-    duration: 350,
-    easing: 'easeOutCubic'
-  });
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-}
-
-// ═══════════════════════════════════════════
-//  SEARCH MODAL
-// ═══════════════════════════════════════════
-function openSearch() {
-  const m = document.getElementById('searchModal');
-  m.classList.remove('hidden');
-  m.style.display = 'flex';
-  setTimeout(() => document.getElementById('searchInput').focus(), 80);
-  anime({ targets: '.search-box', translateY: [-16, 0], opacity: [0, 1], duration: 300, easing: 'easeOutCubic' });
-}
-function closeSearch() {
-  anime({
-    targets: '.search-box', translateY: [0, -12], opacity: [1, 0],
-    duration: 200, easing: 'easeInCubic',
-    complete: () => {
-      const m = document.getElementById('searchModal');
-      m.classList.add('hidden');
-      m.style.display = '';
-      document.getElementById('searchInput').value = '';
-      document.getElementById('searchResults').innerHTML = '';
-      document.getElementById('searchEmpty').classList.add('hidden');
-    }
-  });
-}
-document.getElementById('searchModal').addEventListener('click', function(e) {
-  if (e.target === this) closeSearch();
-});
-
-// ═══════════════════════════════════════════
-//  TAB SWITCH
-// ═══════════════════════════════════════════
-function switchTab(tab) {
-  const allEl = document.getElementById('list-all');
-  const newEl = document.getElementById('list-new');
-  const tAll  = document.getElementById('tab-all');
-  const tNew  = document.getElementById('tab-new');
-  if (tab === 'all') {
-    allEl.classList.remove('hidden'); newEl.classList.add('hidden');
-    tAll.classList.add('active');     tNew.classList.remove('active');
-    animeListIn('#list-all .app-item');
-  } else {
-    newEl.classList.remove('hidden'); allEl.classList.add('hidden');
-    tNew.classList.add('active');     tAll.classList.remove('active');
-    animeListIn('#list-new .app-item');
-  }
-}
-function animeListIn(sel) {
-  anime({
-    targets: sel,
-    translateY: [12, 0],
-    opacity: [0, 1],
-    delay: anime.stagger(55),
-    duration: 300,
-    easing: 'easeOutCubic'
-  });
-}
-
-// ═══════════════════════════════════════════
-//  PAGE LOAD — ANIME.JS ORCHESTRATION
-// ═══════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-
-  // 1. Header title
-  anime({
-    targets: '.header-title',
-    translateY: [-12, 0],
-    opacity: [0, 1],
-    duration: 550,
-    easing: 'easeOutBack'
-  });
-
-  // 2. Floating particles in header
-  anime({
-    targets: '#hp1',
-    translateY: [-8, 8],
-    opacity: [0.15, 0.35],
-    direction: 'alternate',
-    loop: true,
-    duration: 3200,
-    easing: 'easeInOutSine'
-  });
-  anime({
-    targets: '#hp2',
-    translateY: [6, -6],
-    translateX: [-4, 4],
-    opacity: [0.1, 0.25],
-    direction: 'alternate',
-    loop: true,
-    duration: 2400,
-    easing: 'easeInOutSine'
-  });
-  anime({
-    targets: '#hp3',
-    translateY: [-5, 5],
-    opacity: [0.08, 0.2],
-    direction: 'alternate',
-    loop: true,
-    duration: 2800,
-    easing: 'easeInOutSine'
-  });
-
-  // 3. Hero banner
-  anime({
-    targets: '.hero-section',
-    translateY: [20, 0],
-    opacity: [0, 1],
-    duration: 600,
-    delay: 150,
-    easing: 'easeOutCubic'
-  });
-
-  // 4. Podium cards — staggered rise
-  anime({
-    targets: '.podium-card',
-    translateY: [30, 0],
-    opacity: [0, 1],
-    delay: anime.stagger(100, { start: 300 }),
-    duration: 600,
-    easing: 'easeOutBack'
-  });
-
-  // 5. Telegram banner
-  anime({
-    targets: '.tg-banner',
-    translateX: [-24, 0],
-    opacity: [0, 1],
-    duration: 500,
-    delay: 550,
-    easing: 'easeOutCubic'
-  });
-
-  // 6. App list section
-  anime({
-    targets: '.section-appear',
-    translateY: [24, 0],
-    opacity: [0, 1],
-    duration: 500,
-    delay: 650,
-    easing: 'easeOutCubic'
-  });
-
-  // 7. Initial list items
-  animeListIn('#list-all .app-item');
-});
-
-// ═══════════════════════════════════════════
-//  RIPPLE ON DOWNLOAD BUTTONS
-// ═══════════════════════════════════════════
-document.querySelectorAll('.btn-dl').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height) * 1.5;
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple-circle';
-    ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;`;
-    this.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 560);
-  });
-});
-
-// ═══════════════════════════════════════════
-//  DOWNLOAD BUTTON — ANIME.JS CLICK BOUNCE
-// ═══════════════════════════════════════════
-document.querySelectorAll('.btn-dl').forEach(btn => {
-  btn.addEventListener('mousedown', function() {
-    anime({ targets: this, scale: [1, 0.92], duration: 100, easing: 'easeInCubic' });
-  });
-  btn.addEventListener('mouseup', function() {
-    anime({ targets: this, scale: [0.92, 1.06, 1], duration: 280, easing: 'easeOutBack' });
-  });
-  btn.addEventListener('mouseleave', function() {
-    anime({ targets: this, scale: 1, duration: 180, easing: 'easeOutCubic' });
-  });
-});
-
-// ═══════════════════════════════════════════
-//  PODIUM DOWNLOAD BUTTONS HOVER ANIME
-// ═══════════════════════════════════════════
-document.querySelectorAll('.podium-dl-btn').forEach(btn => {
-  btn.addEventListener('mouseenter', function() {
-    anime({ targets: this, scale: 1.07, duration: 200, easing: 'easeOutBack' });
-  });
-  btn.addEventListener('mouseleave', function() {
-    anime({ targets: this, scale: 1, duration: 200, easing: 'easeOutCubic' });
-  });
-});
-
-// ═══════════════════════════════════════════
-//  RANK BADGE POP ON APP ITEM HOVER
-// ═══════════════════════════════════════════
-document.querySelectorAll('.app-item').forEach(item => {
-  const badge = item.querySelector('.rank-badge');
-  if (!badge) return;
-  item.addEventListener('mouseenter', () => {
-    anime({ targets: badge, scale: [1, 1.25], duration: 220, easing: 'easeOutBack' });
-  });
-  item.addEventListener('mouseleave', () => {
-    anime({ targets: badge, scale: [1.25, 1], duration: 180, easing: 'easeOutCubic' });
-  });
-});
-
-// ═══════════════════════════════════════════
-//  MENU BUTTON MORPH ANIMATION
-// ═══════════════════════════════════════════
-document.getElementById('menuBtn').addEventListener('click', function() {
-  anime({
-    targets: this,
-    rotate: [0, 8, -4, 0],
-    duration: 380,
-    easing: 'easeOutElastic(1, .8)'
-  });
-});
-
-// ═══════════════════════════════════════════
-//  SEARCH INPUT RESULTS (basic)
-// ═══════════════════════════════════════════
-const apps = [
-  { name:'Jaiho Rummy', bonus:'₹50', href:'jaiho-777.html' },
-  { name:'Bingo 101', bonus:'₹20', href:'jaiho-777.html' },
-  { name:'Jaiho 777 Vip', bonus:'₹155', href:'jaiho-777.html' },
-  { name:'Ok Rummy', bonus:'₹25', href:'jaiho-777.html' },
-  { name:'Joy Rummy', bonus:'₹51', href:'jaiho-777.html' },
-  { name:'Jaiho 91', bonus:'₹100', href:'jaiho-777.html' },
-  { name:'Spin Gold', bonus:'₹37', href:'jaiho-777.html' },
-  { name:'Yes Spin', bonus:'₹40', href:'jaiho-777.html' },
-  { name:'Slots Winner', bonus:'₹100', href:'jaiho-777.html' },
-  { name:'INR Rummy', bonus:'₹50', href:'jaiho-777.html' },
-  { name:'Gogo Rummy', bonus:'₹55', href:'jaiho-777.html' },
-  { name:'Ever 777', bonus:'₹60', href:'jaiho-777.html' },
-  { name:'Love Rummy', bonus:'₹75', href:'jaiho-777.html' },
-];
-document.getElementById('searchInput').addEventListener('input', function() {
-  const q = this.value.trim().toLowerCase();
-  const ul = document.getElementById('searchResults');
-  const empty = document.getElementById('searchEmpty');
-  ul.innerHTML = '';
-  if (!q) { empty.classList.add('hidden'); return; }
-  const hits = apps.filter(a => a.name.toLowerCase().includes(q));
-  if (!hits.length) { empty.classList.remove('hidden'); return; }
-  empty.classList.add('hidden');
-  hits.forEach(a => {
-    const li = document.createElement('li');
-    li.className = 'flex items-center px-4 py-3 gap-3 hover:bg-gray-50 cursor-pointer';
-    li.innerHTML = `
-      <div class="flex-1">
-        <p class="font-semibold text-gray-800 text-sm">${a.name}</p>
-        <p class="text-green-600 text-xs">🎁 Signup: ${a.bonus}</p>
+    <!-- APP LIST -->
+    <section id="categories" class="section-appear mt-5 mx-3 mb-2">
+      <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+        <div class="p-3 border-b border-gray-100">
+          <div class="tab-bar flex">
+            <button onclick="switchTab('all')" id="tab-all" class="tab-btn active flex-1 text-center">All Apps</button>
+            <button onclick="switchTab('new')" id="tab-new" class="tab-btn flex-1 text-center">New Apps</button>
+          </div>
+        </div>
+        <div id="list-all">
+          <ul class="divide-y divide-gray-50">
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">1</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#15803d">JR</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹50</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl btn-dl-animated text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">2</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#ca8a04">B101</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Bingo 101</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹20</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">3</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#166534">J777</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho 777 Vip</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹155</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">4</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#16a34a">OK</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Ok Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹25</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">5</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#2563eb">JOY</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Joy Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹51</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">6</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#15803d">J91</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Jaiho 91</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹100</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">7</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#b45309">SG</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Spin Gold</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹37</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">8</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#7c3aed">YS</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Yes Spin</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹40</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">9</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#dc2626">SW</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Slots Winner</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹100</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge">10</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#ea580c">INR</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">INR Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹50</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+          </ul>
+        </div>
+        <div id="list-new" class="hidden">
+          <ul class="divide-y divide-gray-50">
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">1</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#0d9488">GG</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Gogo Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹55</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">2</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#4338ca">E777</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Ever 777</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹60</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+            <li class="app-item flex items-center px-4 py-3 gap-3">
+              <div class="item-bar"></div>
+              <div class="rank-badge top3">3</div>
+              <div
+                class="app-avatar w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
+                style="background:#be185d">LR</div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 text-sm leading-tight">Love Rummy</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ₹75</p>
+                <p class="text-gray-400 text-[11px]">Min Withdrawal: ₹100</p>
+              </div><a href="jaiho-777.html"
+                class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl flex-shrink-0"><span
+                  class="dl-text">⬇ Download</span></a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <a href="${a.href}" class="btn-dl text-white text-[11px] font-bold px-3.5 py-2 rounded-xl">⬇ Download</a>`;
-    ul.appendChild(li);
-  });
-  anime({ targets: '#searchResults li', translateY: [-8, 0], opacity: [0, 1], delay: anime.stagger(40), duration: 250, easing: 'easeOutCubic' });
-});
-</script>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-8 bg-gray-950 text-white">
+      <div class="overflow-hidden bg-gray-900 py-2">
+        <div class="ticker-track text-xs text-gray-400 font-medium">&nbsp;&nbsp;&nbsp;All Yono Game &nbsp;•&nbsp; Yono
+          All Game &nbsp;•&nbsp; Yono All Games &nbsp;•&nbsp; Yono Game App &nbsp;•&nbsp; All Yono App &nbsp;•&nbsp;
+          Yono Games Download &nbsp;•&nbsp; Rummy App Download &nbsp;•&nbsp; Win Real Cash &nbsp;•&nbsp; Best Rummy App
+          &nbsp;•&nbsp;</div>
+      </div>
+      <div class="text-center py-6 border-b border-gray-800">
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-3 font-semibold">Connect With Us</p>
+        <div class="flex justify-center gap-3">
+          <a href="#"
+            class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-red-600 flex items-center justify-center"
+            aria-label="YouTube"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" />
+              </svg></a>
+          <a href="#"
+            class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-pink-600 flex items-center justify-center"
+            aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.2-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9C2.4 3.9 4 2.3 7.1 2.3c1.3-.1 1.7-.1 4.9-.1zm0-2.2C8.7 0 8.3 0 7 .1 2.7.3.3 2.7.1 7 0 8.3 0 8.7 0 12s0 3.7.1 5c.2 4.3 2.6 6.7 7 6.9 1.3.1 1.7.1 5 .1s3.7 0 5-.1c4.3-.2 6.7-2.6 6.9-7 .1-1.3.1-1.7.1-5s0-3.7-.1-5c-.2-4.3-2.6-6.7-7-6.9C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z" />
+              </svg></a>
+          <a href="#"
+            class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-blue-600 flex items-center justify-center"
+            aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z" />
+              </svg></a>
+          <a href="#"
+            class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-slate-600 flex items-center justify-center"
+            aria-label="X"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18.24 3h3.56l-7.77 8.9L23 21h-7.15l-5.6-7.35L4.1 21H.53l8.32-9.51L1 3h7.33l5.06 6.72L18.24 3zM17 19h1.97L7.08 5H4.97L17 19z" />
+              </svg></a>
+        </div>
+      </div>
+      <div class="px-4 py-4">
+        <div class="flex flex-wrap justify-center gap-2 mb-2">
+          <a href="about.html"
+            class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">👤 About Us</a>
+          <a href="#contact"
+            class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">📞 Contact Us</a>
+          <a href="#privacy"
+            class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">🔒 Privacy
+            Policy</a>
+        </div>
+        <div class="flex flex-wrap justify-center gap-2">
+          <a href="#terms" class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">📄
+            Terms &amp; Conditions</a>
+          <a href="#disclaimer"
+            class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">⚠️ Disclaimer</a>
+        </div>
+      </div>
+      <div class="text-center py-4 border-t border-gray-800 text-xs text-gray-500">Copyright © <strong
+          class="text-gray-300">All Yono App</strong> · All Rights Reserved</div>
+    </footer>
+  </div>
+
+  <!-- SEARCH MODAL -->
+  <div id="searchModal"
+    class="hidden fixed inset-0 bg-black/65 backdrop-blur-sm z-[60] items-start justify-center pt-14 px-4">
+    <div class="search-box bg-white rounded-2xl shadow-2xl w-full max-w-[720px] overflow-hidden border border-gray-100">
+      <div class="flex items-center gap-3 px-4 py-3.5 border-b border-gray-100">
+        <svg class="w-5 h-5 text-green-500 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M11.5 21C16.75 21 21 16.75 21 11.5C21 6.25 16.75 2 11.5 2C6.25 2 2 6.25 2 11.5C2 16.75 6.25 21 11.5 21Z"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 22L20 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round" /></svg>
+        <input id="searchInput" type="text" placeholder="Search rummy apps…"
+          class="flex-1 text-sm outline-none text-gray-800 placeholder-gray-400 bg-transparent font-medium" />
+        <button onclick="closeSearch()"
+          class="icon-bounce text-gray-300 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-lg transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+            <path d="M9.17 14.83L14.83 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M14.83 14.83L9.17 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" /></svg>
+        </button>
+      </div>
+      <ul id="searchResults" class="divide-y divide-gray-50 max-h-[340px] overflow-y-auto"></ul>
+      <p id="searchEmpty" class="hidden text-center text-gray-400 text-sm py-8">😕 No apps found.</p>
+    </div>
+  </div>
+
+  <script src="asstes/js/shared.js"></script>
 </body>
+
 </html>
