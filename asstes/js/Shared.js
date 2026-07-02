@@ -95,12 +95,12 @@ function animeListIn(sel) {
 
 // ── Search data ──────────────────────────────────────────────
 const allApps = [
-  { name: 'Jaiho Rummy',   bonus: '₹50',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'JR',   bg: '#15803d' },
+  { name: 'Jaiho Rummy',   bonus: '₹50',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'JR',   bg: '#0A65E6' },
   { name: 'Bingo 101',     bonus: '₹20',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'B101', bg: '#ca8a04' },
   { name: 'Jaiho 777 Vip', bonus: '₹155', withdraw: '₹100', link: 'jaiho-777.html', initials: 'J777', bg: '#166534' },
-  { name: 'Ok Rummy',      bonus: '₹25',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'OK',   bg: '#16a34a' },
+  { name: 'Ok Rummy',      bonus: '₹25',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'OK',   bg: '#0A65E6' },
   { name: 'Joy Rummy',     bonus: '₹51',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'JOY',  bg: '#2563eb' },
-  { name: 'Jaiho 91',      bonus: '₹100', withdraw: '₹100', link: 'jaiho-777.html', initials: 'J91',  bg: '#15803d' },
+  { name: 'Jaiho 91',      bonus: '₹100', withdraw: '₹100', link: 'jaiho-777.html', initials: 'J91',  bg: '#0A65E6' },
   { name: 'Spin Gold',     bonus: '₹37',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'SG',   bg: '#b45309' },
   { name: 'Yes Spin',      bonus: '₹40',  withdraw: '₹100', link: 'jaiho-777.html', initials: 'YS',   bg: '#7c3aed' },
   { name: 'Slots Winner',  bonus: '₹100', withdraw: '₹100', link: 'jaiho-777.html', initials: 'SW',   bg: '#dc2626' },

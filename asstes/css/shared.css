@@ -104,7 +104,7 @@
 
 .sidebar-link:hover {
     background: #dcfce7;
-    color: #15803d;
+    color: #0A65E6;
     padding-left: 22px;
 }
 
@@ -129,7 +129,7 @@
     left: 0;
     width: 0%;
     height: 1.5px;
-    background: #16a34a;
+    background: #0A65E6;
     transition: width .25s cubic-bezier(.4, 0, .2, 1);
 }
 
@@ -150,7 +150,7 @@
 
 /* ── Download button (list) ── */
 .btn-dl {
-    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    background: linear-gradient(135deg, #0A65E6 0%, #0A65E6 100%);
     box-shadow: 0 2px 8px rgba(22, 163, 74, .35);
     transition: box-shadow .25s, transform .18s;
     position: relative;
@@ -248,13 +248,13 @@
 }
 
 .tab-btn.active {
-    background: #16a34a;
+    background: #0A65E6;
     color: #fff;
     box-shadow: 0 2px 12px rgba(22, 163, 74, .4);
 }
 
 .tab-btn:not(.active):hover {
-    color: #16a34a;
+    color: #0A65E6;
     background: #dcfce7;
 }
 
@@ -281,7 +281,7 @@
 
 .app-item:hover {
     background: #f0fdf4;
-    border-left-color: #16a34a;
+    border-left-color: #0A65E6;
 }
 
 .app-item .item-bar {
@@ -290,7 +290,7 @@
     top: 0;
     width: 3px;
     height: 0%;
-    background: #16a34a;
+    background: #0A65E6;
     transition: height .28s cubic-bezier(.4, 0, .2, 1);
     border-radius: 0 2px 2px 0;
 }
@@ -646,7 +646,7 @@
 
 /* Main download button */
 .btn-main-dl {
-    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    background: linear-gradient(135deg, #0A65E6 0%, #0A65E6 100%);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -784,7 +784,7 @@
 
 .share-btn:hover {
     transform: scale(1.18) rotate(12deg);
-    color: #16a34a;
+    color: #0A65E6;
 }
 
 /* Stat items */
@@ -801,7 +801,7 @@
 }
 
 .stat-item:hover .stat-num {
-    color: #16a34a;
+    color: #0A65E6;
 }
 
 /* Rating row */
@@ -871,7 +871,7 @@
 
 .faq-btn:hover .faq-q-badge {
     transform: scale(1.1);
-    background: #15803d;
+    background: #0A65E6;
 }
 
 /* Also-like / More cards */
