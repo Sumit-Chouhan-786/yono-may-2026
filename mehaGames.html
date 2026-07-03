@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maha Games - Download APK | Play Online Skill Games for Android</title>
+
+    <!-- Meta Description -->
+    <meta name="description"
+        content="Download the latest Maha Games APK for Android. Explore exciting skill-based games, smooth gameplay, secure login, and regular updates. Enjoy an engaging mobile gaming experience.">
+
+    <!-- Meta Keywords -->
+    <meta name="keywords"
+        content="Maha Games, Maha Games APK, Maha Games Download, Maha Games App, Maha Games Login, Maha Games Register, Android Games, Skill Games, Mobile Gaming, Latest Maha Games APK, Card Games, Online Games, Gaming App">
+
+    <!-- Meta Robots -->
+    <meta name="robots" content="index,follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Maha Games APK Download – Latest Version for Android">
+    <meta property="og:description"
+        content="Download the latest Maha Games APK and enjoy exciting skill-based games with a smooth gaming experience.">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://yourdomain.com/maha-games">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="stylesheet" href="assets/css/shared.css" />
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-[800px] mx-auto bg-white min-h-screen">
+
+        <!-- HEADER -->
+        <header
+            class="bg-gradient-to-r from-green-700 via-green-600 to-emerald-500 text-white flex items-center justify-between px-4 py-3 sticky top-0 z-50 nav-glow"
+            style="position:relative;overflow:hidden;">
+            <span class="header-particle" id="hp1" style="width:36px;height:36px;top:-8px;left:55px;"></span>
+            <span class="header-particle" id="hp2" style="width:20px;height:20px;top:3px;left:190px;"></span>
+            <span class="header-particle" id="hp3" style="width:14px;height:14px;bottom:-4px;right:110px;"></span>
+            <button id="menuBtn"
+                class="nav-btn icon-bounce text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Menu">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 7H21" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+                    <path d="M3 12H21" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+                    <path d="M3 17H21" stroke="white" stroke-width="2.2" stroke-linecap="round" /></svg>
+            </button>
+            <div id="headerTitle" class="header-title flex flex-col items-center">
+                <h1 class="text-base font-extrabold tracking-wider leading-tight" style="letter-spacing:.06em;">ALL YONO
+                    APP
+                </h1>
+                <span class="text-green-200 text-[10px] font-medium tracking-widest">INDIA'S TOP RUMMY PLATFORM</span>
+            </div>
+            <button type="button" onclick="openSearch()"
+                class="search-btn nav-btn text-white focus:outline-none p-1 rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Open search">
+                <svg class="w-6 h-6 search-btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+                    focusable="false">
+                    <path
+                        d="M11.5 21C16.75 21 21 16.75 21 11.5C21 6.25 16.75 2 11.5 2C6.25 2 2 6.25 2 11.5C2 16.75 6.25 21 11.5 21Z"
+                        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22 22L20 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- SIDEBAR OVERLAY -->
+        <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onclick="closeSidebar()"></div>
+
+        <!-- SIDEBAR -->
+        <nav id="sidebar" class="fixed top-0 left-0 h-full bg-white z-50 shadow-2xl flex flex-col" style="width:272px">
+            <div class="flex items-center justify-between px-5 py-4"
+                style="background:linear-gradient(135deg,#0A65E6,#0A65E6)">
+                <div>
+                    <p class="font-bold text-white text-base tracking-wide">YONO APK STORE</p>
+                    <p class="text-green-200 text-xs">India's Top Rummy Platform</p>
+                </div>
+                <button onclick="closeSidebar()"
+                    class="icon-bounce text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.17 14.83L14.83 9.17" stroke="white" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M14.83 14.83L9.17 9.17" stroke="white" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" /></svg>
+                </button>
+            </div>
+            <ul class="flex-1 overflow-y-auto py-3 px-1">
+                <li><a href="index.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"><svg
+                            class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M9.02 2.84L3.63 7.04C2.73 7.74 2 9.23 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.3 21.19 7.74 20.2 7.05L14.02 2.72C12.62 1.74 10.37 1.79 9.02 2.84Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 17.99V14.99" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" /></svg><span class="link-label">Home</span></a></li>
+
+                <li><a href="about.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm"><svg
+                            class="sidebar-icon w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.17 11.49 11.73 11.4 13.75 6.75C13.75 4.13 11.62 2 9 2Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M4.16 14.56C1.56 16.28 1.56 19.06 4.16 20.77C7.11 22.71 11.9 22.71 14.85 20.77C17.45 19.05 17.45 16.27 14.85 14.56C11.91 12.63 7.12 12.63 4.16 14.56Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" /></svg><span class="link-label">About us</span></a></li>
+                <li>
+                    <a href="contactUs.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-700 font-medium text-sm">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon w-5 h-5 text-green-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21.75 7.5v9a2.25 2.25 0 0 1-2.25 2.25h-15A2.25 2.25 0 0 1 2.25 16.5v-9A2.25 2.25 0 0 1 4.5 5.25h15A2.25 2.25 0 0 1 21.75 7.5zm-18 0L12 13.5l8.25-6" />
+                        </svg>
+
+                        <span class="link-label">Contact Us</span>
+                    </a>
+                </li>
+                <li class="my-1 mx-4 border-t border-gray-100"></li>
+                <li><a href="privacy-policy.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+                            class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M10.49 2.23L5.5 4.11C4.35 4.54 3.41 5.9 3.41 7.12V14.55C3.41 15.73 4.19 17.28 5.14 17.99L9.44 21.2C10.85 22.26 13.17 22.26 14.58 21.2L18.88 17.99C19.83 17.28 20.61 15.73 20.61 14.55V7.12C20.61 5.89 19.67 4.53 18.52 4.1L13.53 2.23C12.68 1.92 11.32 1.92 10.49 2.23Z"
+                                stroke="currentColor" stroke-width="1.
+8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.05 11.87L10.66 13.48L14.96 9.18" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" /></svg><span class="link-label">Privacy
+                            Policy</span></a></li>
+                <li><a href="terms-conditions.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+                            class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M14.5 4.5V6.5C14.5 7.6 15.4 8.5 16.5 8.5H18.5" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8 13H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M8 17H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" /></svg><span class="link-label">Terms &amp;
+                            Conditions</span></a></li>
+                <li><a href="disclaimer.html"
+                        class="sidebar-link flex items-center gap-3 px-4 py-3 text-gray-500 font-medium text-sm"><svg
+                            class="sidebar-icon w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 8V13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M11.9945 16H12.0035" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round" /></svg><span
+                            class="link-label">Disclaimer</span></a></li>
+            </ul>
+            <div class="px-5 py-4 border-t border-gray-100 bg-gray-50">
+                <p class="text-xs text-gray-400 text-center">© Yono Apk Store · All Rights Reserved</p>
+            </div>
+        </nav>
+
+        <!-- APP INFO CARD -->
+        <section class="app-card mx-3 mt-4 bg-white rounded-2xl shadow-md p-4 border border-gray-100">
+            <div class="flex items-start gap-4">
+                <div
+                    class="app-icon-wrap w-20 h-20 rounded-2xl bg-green-800 flex items-center justify-center text-white font-extrabold text-xl flex-shrink-0 shadow-md border-4 border-green-600">
+                    <span>MEHA</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between">
+                        <h2 class="text-gray-900 font-bold text-xl leading-tight">Meha Games</h2>
+                        <button class="share-btn text-gray-400 p-1" aria-label="Share">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <circle cx="18" cy="5" r="3" />
+                                <circle cx="6" cy="12" r="3" />
+                                <circle cx="18" cy="19" r="3" />
+                                <path stroke-linecap="round" d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" /></svg>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5">
+                        <span class="text-green-600 text-xs font-semibold">Yono App</span>
+                        <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.58 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" />
+                        </svg>
+                        <span class="text-green-600 text-xs">Trusted</span>
+                    </div>
+                    <div class="flex gap-4 mt-2 text-center">
+                        <div class="stat-item">
+                            <p class="stat-num text-gray-800 font-bold text-sm">900K+</p>
+                            <p class="text-gray-400 text-xs">Downloads</p>
+                        </div>
+                        <div class="border-l border-gray-200"></div>
+                        <div class="stat-item">
+                            <p class="stat-num text-gray-800 font-bold text-sm">8MB</p>
+                            <p class="text-gray-400 text-xs">Size</p>
+                        </div>
+                        <div class="border-l border-gray-200"></div>
+                        <div class="stat-item">
+                            <p class="stat-num text-gray-800 font-bold text-sm">5.0+</p>
+                            <p class="text-gray-400 text-xs">Android Version</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rating-row flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                <div class="flex items-center gap-1">
+                    <span class="star">★★★★</span><span class="text-yellow-300">★</span>
+                    <span class="text-gray-800 font-bold text-sm ml-1">4.4</span>
+                    <span class="text-gray-400 text-xs">(17,379 Reviews)</span>
+                </div>
+                <span class="bg-red-100 text-red-700 font-bold text-xs px-2 py-1 rounded">🔞 PEGI-18</span>
+            </div>
+            <a href="#"
+                class="btn-main-dl mt-4 flex items-center justify-center w-full text-white font-extrabold text-base py-3 rounded-xl tracking-wide">
+                <span class="btn-inner"><span class="dl-arrow">⬇</span><span>DOWNLOAD</span></span>
+            </a>
+        </section>
+
+        <!-- YOU MAY ALSO LIKE -->
+        <section class="section-fade mt-5 mx-3">
+            <p class="text-gray-700 font-semibold text-sm mb-3">You may also like...</p>
+            <div class="flex gap-3 overflow-x-auto pb-2" style="scrollbar-width:none;">
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-green-800 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        IND</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Ind Bingo</p>
+                    <p class="text-green-600 text-xs font-bold">₹50</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-red-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        567</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">567 Slots</p>
+                    <p class="text-green-600 text-xs font-bold">₹67</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-green-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        J777</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Jaiho 777</p>
+                    <p class="text-green-600 text-xs font-bold">₹129</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-blue-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        SHR</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Share Slots</p>
+                    <p class="text-green-600 text-xs font-bold">₹50</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-teal-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        YNO</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">All New Yono</p>
+                    <p class="text-green-600 text-xs font-bold">₹151</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-green-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        OK</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Ok Rummy</p>
+                    <p class="text-green-600 text-xs font-bold">₹25</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-purple-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        SPIN</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Spin Crush</p>
+                    <p class="text-green-600 text-xs font-bold">₹30</p>
+                </a>
+                <a href="jaiho-777.html" class="also-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="also-card-icon w-16 h-16 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        R888</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center leading-tight">Rummy 888</p>
+                    <p class="text-green-600 text-xs font-bold">₹75</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section-fade mt-5 mx-3">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="flex-1 h-px bg-gray-300"></div>
+                <span class="text-gray-700 font-extrabold text-sm tracking-widest px-2">✦ FAQ'S ✦</span>
+                <div class="flex-1 h-px bg-gray-300"></div>
+            </div>
+
+            <div class="space-y-3">
+
+                <!-- FAQ 1 -->
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button onclick="toggleFaq(this)"
+                        class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="faq-q-badge bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">Q.1</span>
+                            <span class="text-gray-800 font-semibold text-sm">What Is The Maha Games APK?</span>
+                        </div>
+                        <svg class="faq-icon w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+
+                    <div class="faq-body text-gray-600 text-sm leading-relaxed">
+                        Maha Games APK is an Android gaming application that provides a smooth, responsive, and
+                        user-friendly mobile gaming experience. It features an intuitive interface, quick navigation,
+                        and optimized performance, allowing users to easily access a variety of game categories.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button onclick="toggleFaq(this)"
+                        class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="faq-q-badge bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">Q.2</span>
+                            <span class="text-gray-800 font-semibold text-sm">How Do I Download The Maha Games
+                                APK?</span>
+                        </div>
+                        <svg class="faq-icon w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+
+                    <div class="faq-body text-gray-600 text-sm leading-relaxed">
+                        Download the latest Maha Games APK from a trusted source. Before installing the application,
+                        ensure that your Android device meets the required system requirements and supports the latest
+                        version.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button onclick="toggleFaq(this)"
+                        class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="faq-q-badge bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">Q.3</span>
+                            <span class="text-gray-800 font-semibold text-sm">What Features Does The Latest Maha Games
+                                APK Offer?</span>
+                        </div>
+                        <svg class="faq-icon w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+
+                    <div class="faq-body text-gray-600 text-sm leading-relaxed">
+                        The latest Maha Games APK includes performance enhancements, improved security, bug fixes,
+                        better compatibility with the latest Android devices, and regular updates that improve stability
+                        while introducing new features and optimizations.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button onclick="toggleFaq(this)"
+                        class="faq-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="faq-q-badge bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">Q.4</span>
+                            <span class="text-gray-800 font-semibold text-sm">Why Do Users Search For Maha Games APK
+                                Download, Login, And Register?</span>
+                        </div>
+                        <svg class="faq-icon w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+
+                    <div class="faq-body text-gray-600 text-sm leading-relaxed">
+                        Many users search for <strong>Maha Games APK Download</strong>, <strong>Maha Games App
+                            Download</strong>, <strong>Maha Games Latest Version</strong>, <strong>Maha Games
+                            Login</strong>, and <strong>Maha Games Register</strong> to find the newest version of the
+                        application and explore its features. For the best experience, always download the APK from a
+                        trusted source and verify that your device meets the required system requirements before
+                        installation.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MORE YONO APPS -->
+        <section class="section-fade mt-6 mx-3 mb-6">
+            <h3 class="text-gray-800 font-bold text-sm mb-3">More Yono Apps</h3>
+            <div class="flex gap-3 overflow-x-auto pb-2" style="scrollbar-width:none;">
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-orange-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        INR</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Inr Rummy</p>
+                    <p class="text-green-600 text-xs font-bold">₹50</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-green-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        JS</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Jaiho Slots</p>
+                    <p class="text-green-600 text-xs font-bold">₹101</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-purple-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        RMB</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Ramble...</p>
+                    <p class="text-green-600 text-xs font-bold">₹50</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-pink-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        LR</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Love Rummy</p>
+                    <p class="text-green-600 text-xs font-bold">₹100</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-yellow-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        SG</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Spin Gold</p>
+                    <p class="text-green-600 text-xs font-bold">₹17</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-teal-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        GG</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Gogo Rummy</p>
+                    <p class="text-green-600 text-xs font-bold">₹51</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-red-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        AR</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">All Rummy...</p>
+                    <p class="text-green-600 text-xs font-bold">₹51</p>
+                </a>
+                <a href="jaiho-777.html" class="more-card flex-shrink-0 flex flex-col items-center w-20">
+                    <div
+                        class="more-card-icon w-16 h-16 rounded-2xl bg-indigo-700 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                        E777</div>
+                    <p class="text-xs text-gray-700 font-medium mt-1 text-center">Ever 777</p>
+                    <p class="text-green-600 text-xs font-bold">₹60</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 bg-gray-950 text-white">
+            <div class="overflow-hidden bg-gray-900 py-2">
+                <div class="ticker-track text-xs text-gray-400 font-medium">&nbsp;&nbsp;&nbsp;All Yono Game
+                    &nbsp;•&nbsp; Yono
+                    All Game &nbsp;•&nbsp; Yono All Games &nbsp;•&nbsp; Yono Game App &nbsp;•&nbsp; All Yono App
+                    &nbsp;•&nbsp;
+                    Yono Games Download &nbsp;•&nbsp; Rummy App Download &nbsp;•&nbsp; Win Real Cash &nbsp;•&nbsp; Best
+                    Rummy App
+                    &nbsp;•&nbsp;</div>
+            </div>
+            <div class="text-center py-6 border-b border-gray-800">
+                <p class="text-gray-500 text-[10px] uppercase tracking-widest mb-3 font-semibold">Connect With Us</p>
+                <div class="flex justify-center gap-3">
+                    <!-- Telegram -->
+                    <a href="https://t.me/yono_apk_store" target="_blank" rel="noopener noreferrer"
+                        class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-sky-500 flex items-center justify-center"
+                        aria-label="Telegram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9.04 15.47 8.67 20.7c.53 0 .76-.23 1.03-.5l2.47-2.36 5.12 3.75c.94.52 1.6.25 1.86-.87l3.37-15.8h.01c.31-1.45-.52-2.02-1.43-1.68L1.29 10.9c-1.4.55-1.38 1.33-.24 1.68l5.07 1.58L17.9 6.78c.55-.36 1.05-.16.64.2L9.04 15.47z" />
+                        </svg>
+                    </a>
+
+                    <!-- WhatsApp Channel -->
+                    <a href="https://whatsapp.com/channel/0029VbCwURIKwqSUF8iQKc0X" target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-icon w-10 h-10 rounded-xl bg-gray-800 hover:bg-green-500 flex items-center justify-center"
+                        aria-label="WhatsApp">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.91c0 2.1.55 4.15 1.6 5.96L0 24l6.3-1.65a11.9 11.9 0 0 0 5.77 1.47h.01c6.57 0 11.91-5.34 11.91-11.91 0-3.18-1.24-6.17-3.47-8.43ZM12.08 21.8a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.74.98 1-3.64-.24-.37a9.88 9.88 0 1 1 8.38 4.62Zm5.43-7.42c-.3-.15-1.77-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.4-1.46-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.38-.27.3-1.05 1.03-1.05 2.52s1.08 2.92 1.23 3.12c.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.43-.08-.12-.28-.2-.58-.35Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="px-4 py-4">
+                <div class="flex flex-wrap justify-center gap-2 mb-2">
+                    <a href="about.html"
+                        class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">👤
+                        About Us</a>
+                    <a href="contactUs.html"
+                        class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">📞
+                        Contact Us</a>
+                    <a href="privacy-policy.html"
+                        class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">🔒
+                        Privacy
+                        Policy</a>
+                </div>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <a href="terms-conditions.html"
+                        class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">📄
+                        Terms &amp; Conditions</a>
+                    <a href="disclaimer.html"
+                        class="footer-pill border border-gray-700 text-gray-400 text-xs px-4 py-1.5 rounded-full">⚠️
+                        Disclaimer</a>
+                </div>
+            </div>
+            <div class="text-center py-4 border-t border-gray-800 text-xs text-gray-500">Copyright © <strong
+                    class="text-gray-300">Yono Apk Store</strong> · All Rights Reserved</div>
+        </footer>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div id="searchModal"
+        class="hidden fixed inset-0 bg-black/65 backdrop-blur-sm z-[60] items-start justify-center pt-14 px-4">
+        <div
+            class="search-box bg-white rounded-2xl shadow-2xl w-full max-w-[720px] overflow-hidden border border-gray-100">
+            <div class="flex items-center gap-3 px-4 py-3.5 border-b border-gray-100">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M11.5 21C16.75 21 21 16.75 21 11.5C21 6.25 16.75 2 11.5 2C6.25 2 2 6.25 2 11.5C2 16.75 6.25 21 11.5 21Z"
+                        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22 22L20 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round" /></svg>
+                <input id="searchInput" type="text" placeholder="Search rummy apps…"
+                    class="flex-1 text-sm outline-none text-gray-800 placeholder-gray-400 bg-transparent font-medium" />
+                <button onclick="closeSearch()"
+                    class="icon-bounce text-gray-300 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-lg transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                        <path d="M9.17 14.83L14.83 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M14.83 14.83L9.17 9.17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" /></svg>
+                </button>
+            </div>
+            <ul id="searchResults" class="divide-y divide-gray-50 max-h-[340px] overflow-y-auto"></ul>
+            <p id="searchEmpty" class="hidden text-center text-gray-400 text-sm py-8">😕 No apps found.</p>
+        </div>
+    </div>
+
+    <script src="assets/js/shared.js"></script>
+</body>
+
+</html>
