@@ -95,11 +95,41 @@ function animeListIn(sel) {
 
 // ── Search data ──────────────────────────────────────────────
 const allApps = [
-  { name: 'Yn 777',   bonus: '₹50',  withdraw: '₹100', link: 'yn777.html', initials: 'JR',   bg: '#0A65E6' },
-  { name: 'boss Rummy',     bonus: '₹20',  withdraw: '₹100', link: 'bossRummy.html', initials: 'B101', bg: '#ca8a04' },
-  { name: '789 Jackpot', bonus: '₹155', withdraw: '₹100', link: '789jackpot.html', initials: 'J777', bg: '#166534' },
-  { name: 'Joy Rummy',      bonus: '₹25',  withdraw: '₹100', link: 'joyRummy.html', initials: 'OK',   bg: '#0A65E6' },
-  { name: 'Meha Games',    bonus: '₹55',  withdraw: '₹100', link: 'mehaGames.html', initials: 'GG',   bg: '#0d9488' },
+  {
+    name: 'Yn 777',
+    bonus: '₹50',
+    withdraw: '₹100',
+    link: 'yn777.html',
+    icon: 'assets/images/Yn-777-app-icon.webp'
+  },
+  {
+    name: 'Boss Rummy',
+    bonus: '₹20',
+    withdraw: '₹100',
+    link: 'bossRummy.html',
+    icon: 'assets/images/boss-rummy-app-icon.webp'
+  },
+  {
+    name: '789 Jackpot',
+    bonus: '₹155',
+    withdraw: '₹100',
+    link: '789jackpot.html',
+    icon: 'assets/images/789-Jackpots-app-icon.webp'
+  },
+  {
+    name: 'Joy Rummy',
+    bonus: '₹25',
+    withdraw: '₹100',
+    link: 'joyRummy.html',
+    icon: 'assets/images/joy-rummy-app-icon.webp'
+  },
+  {
+    name: 'Meha Games',
+    bonus: '₹55',
+    withdraw: '₹100',
+    link: 'mehaGames.html',
+    icon: 'assets/images/maha-games-app-icon.webp'
+  }
 ];
 
 function renderResults(query) {
@@ -117,8 +147,11 @@ function renderResults(query) {
   list.innerHTML = filtered.map((app, i) => `
     <li style="animation:fadeUp .2s ease ${i * 0.04}s both"
         class="flex items-center px-4 py-3 gap-3 hover:bg-green-50 transition-colors cursor-pointer border-l-2 border-transparent hover:border-green-500">
-      <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-xs flex-shrink-0 shadow-sm"
-           style="background:${app.bg}">${app.initials}</div>
+      <img
+    src="${app.icon}"
+    alt="${app.name}"
+    class="w-11 h-11 rounded-xl object-cover flex-shrink-0 shadow-sm"
+    onerror="this.src='assets/images/default.webp'">
       <div class="flex-1 min-w-0">
         <p class="font-semibold text-gray-800 text-sm leading-tight">${app.name}</p>
         <p class="text-green-600 text-xs font-medium mt-0.5">🎁 Signup: ${app.bonus}</p>
